@@ -1,36 +1,17 @@
 class Solution {
     public boolean isIsomorphic(String s, String t) {
-        if (s.length() != t.length()) {
-            return false;
-        }
-
-        int[] mapST = new int[256];
-        int[] mapTS = new int[256];
-
-        Arrays.fill(mapST, -1);
-        Arrays.fill(mapTS, -1);
-
-        for (int i = 0; i < s.length(); i++) {
-
-            int a = s.charAt(i) ;
-            int b = t.charAt(i) ;
-
-            // s -> t mapping check
-            if (mapST[a] != -1 && mapST[a] != b) {
+        HashMap<Character, Character> s_to_t = new HashMap<>();
+        HashMap<Character, Character> t_to_s = new HashMap<>();
+        for(int i=0;i<s.length();i++){
+            char a = s.charAt(i);
+            char b = t.charAt(i);
+            if(s_to_t.containsKey(a) && s_to_t.get(a)!= b)
                 return false;
-            }
-
-            // t -> s mapping check
-            if (mapTS[b] != -1 && mapTS[b] != a) {
+            if(t_to_s.containsKey(b) && t_to_s.get(b)!=a)
                 return false;
-            }
-
-            // Mapping store karo
-            mapST[a] = b;
-            mapTS[b] = a;
+            s_to_t.put(a,b);
+            t_to_s.put(b,a);
         }
-
         return true;
-
     }
 }
